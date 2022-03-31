@@ -1,0 +1,151 @@
+// Name: Fatima Dayego
+// Year and Section: BSIE 1-1
+
+#include <iostream>
+#include <fstream>
+using namespace std;
+const double VAT = 12;
+
+void promptAndWait();
+void receipt();
+void read();
+void clear();
+
+int main()
+{
+ //Input
+ int ch, wait = 0, temp;
+ do
+ {
+ system("cls");
+ cout << endl;
+cout << "+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*" << endl;
+cout << "*    Grocery Shopping Record       +" << endl;
+cout << "+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*" << endl;
+cout << endl;
+ cout << " [1] Input new Data " << endl;
+ cout << " [2] View File Data" << endl;
+ cout << " [3] Clear File Data" << endl;
+ cout << " [0] Exit" << endl;
+ cout << " Select an option : ";
+ cin >> ch;
+ switch (ch)
+ {
+ case 1:
+ {
+ 
+receipt();
+ promptAndWait();
+ break;
+ }
+ case 2:
+ {
+ 
+ read();
+ promptAndWait();
+ break;
+ } 
+ case 3:
+ {
+ 
+ clear();
+ promptAndWait();
+ break;
+
+ } 
+ case 0:
+ {
+ cout << endl;
+ cout << "Thank you for using the program! ^_^";
+ return 0;
+ break;
+ } 
+ default:
+ {
+ cout << "Invalid Input.";
+ promptAndWait();
+ break;
+ }
+ }
+ }while(wait == 0);
+}
+void promptAndWait()
+{
+ cin.ignore();
+ cout << "\nPress Enter Continue...";
+ cin.get();
+}
+ //Process
+void receipt()
+{
+ ofstream File;
+ File.open("receipt.txt", ios:: app);
+ 
+string p1, p2, p3;
+double p1_price, p2_price, p3_price;
+
+cout << endl;
+cout << "+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*+*" << endl;
+cout << endl;
+cin.ignore(); 
+cout << "Enter Product 1: ";
+getline(cin,p1); 
+cout<< "Enter Price : Php "; 
+cin >> p1_price;
+
+cout << endl; 
+
+cin.ignore(); 
+cout << "Enter Product 2: "; 
+getline(cin,p2); 
+cout<< "Enter Price : Php "; 
+cin >> p2_price;
+
+cout << endl; 
+
+cin.ignore(); 
+cout << "Enter Product 3: ";
+cin >> p3; 
+cout<< "Enter Price : Php "; 
+cin >> p3_price;
+
+cout.setf(ios::showpoint); 
+cout.setf(ios::fixed); 
+cout.precision(2);
+
+ File << endl; 
+ File << "==================== R E C E I P T ====================" << endl; 
+ File << "    Product 1 : " << p1 << " ==> " << " Price : Php" << p1_price << endl; 
+ File << "    Product 2 : " << p2 << " ==> " << " Price : Php" << p2_price << endl; 
+ File << "    Product 3 : " << p3 << " ==> " << " Price : Php" << p3_price << endl; 
+ File << "=======================================================" << endl;
+ File << endl;
+
+ double totalsales = p1_price + p2_price + p3_price; 
+ File << " [Total Sales] : Php " << totalsales << endl; 
+ double VAT = totalsales * 0.12; 
+ File << "     [12% VAT] : " << VAT << endl; 
+ double TA = totalsales + VAT; 
+ File << "[Total Amount] : Php " << TA << endl; 
+ File << "=======================================================" << endl; 
+File.close();
+  }
+
+ //Output
+void read()
+{
+ string data;
+ ifstream ReadFile("receipt.txt");
+ while (getline (ReadFile, data)) 
+ {
+ cout << data << endl;
+ }
+ ReadFile.close();
+}
+void clear()
+{
+ fstream Clear;
+ Clear.open("receipt.txt", ios::out | ios::trunc); 
+ cout << "========== * Data Cleared! * ===========" << endl;
+ 
+}
